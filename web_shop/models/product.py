@@ -13,10 +13,34 @@ import operator
 from web_shop.models.feature import Feature
 from django.utils.text import slugify
 
+# Most saleor product models are extended by inheritance.
+
 class Category(saleor_models.Category):
     order = models.SmallIntegerField("Order", default=0)
+
     class MPTTMeta:
         order_insertion_by = ['order']
+
+
+class ProductImage(BaseModel, saleor_models.ProductImage):
+
+    def get_by_size(self, size):
+        t = [x for x in self.thumbnail_set.all() if x.size == size]
+        if len(t):
+            return t[0]
+        else: 
+            return self.thumbnail_set.get(size=size)
+
+    def __str__(self):
+        html = '<img src="%s" alt="">' % (
+            self.get_absolute_url('admin'),)
+        #html = 'im'
+        return mark_safe(html)
+
+    class Meta(BaseModel.Meta):
+        proxy = True
+        ordering = ['id']
+
 
 class ProductManager(models.Manager):
 

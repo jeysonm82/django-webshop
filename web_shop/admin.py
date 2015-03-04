@@ -1,5 +1,5 @@
 from django.contrib import admin
-from saleor.product.models import Bag, Shirt, Color, FixedProductDiscount, ProductImage
+from saleor.product.models import Bag, Shirt, Color, FixedProductDiscount
 #from saleor.product.models import Category
 from models import ProductVariant
 from collections import OrderedDict
@@ -14,7 +14,9 @@ from django.utils.safestring import mark_safe
 from django.core.urlresolvers import reverse
 from django.shortcuts import redirect
 from django.utils.translation import ugettext_lazy as _
-from models import Feature, FeatureSet, ProductFeatureValue, CategoryImage, Category
+from models import Feature, FeatureSet, ProductFeatureValue, CategoryImage, Category, ProductImage
+
+from django_admin_bootstrapped.admin.models import TabPanelMixin # django_bootstraped with tabs
 
 class ProductVariantAdmin(admin.ModelAdmin):
 
@@ -65,7 +67,7 @@ class ProductVariantInline(admin.StackedInline):
 
     """ A product variant is identified by an unique combination of AttributeValues.
     Constraints:
-    1. A productvariant must have at list one AttributeValue. 
+    1. A productvariant must have at least one AttributeValue. 
     2. A productvariant can only have one AttrValue for each Attribue (ej: One color, One size, etc.).
     3. A productvariant's set  of AttributeValues must be unique among the sets of other
     productvariants of the same product. #TODO
@@ -115,18 +117,18 @@ class ProductFeatureInline(admin.TabularInline):
 
 
 
-class ProductAdmin(admin.ModelAdmin):
+class ProductAdmin(TabPanelMixin, admin.ModelAdmin):
     """ Product  admin. It has an inline for productvariants """
     list_display = ('name', 'category', 'featured')
     form = ProductForm
     fieldsets = (
         (None, {
-            'fields': ('name', 'description','featured', 'order'),
+            'fields': ('name', 'description','featured', 'order', 'price'),
         }),
         (_("Category") +'', {'fields': ('category',)}),
 
     )
-    inlines = [ProductImagesInline, ProductFeatureInline]
+    inlines = [ProductImagesInline, ProductFeatureInline, ProductVariantInline]
 
     tabs = (("General", (None, _("Category")+'')), (
         _("Images")+'', (ProductImagesInline,)), (_("Features")+'', (ProductFeatureInline,)))
@@ -204,7 +206,6 @@ webshop_admin = WebShopAdminSite('webshop')
 # Register your models here.
 webshop_admin.register(Product, ProductAdmin)
 webshop_admin.register(Category, CategoryAdmin)
-#webshop_admin.register(ProductVariant, ProductVariantAdmin)
-#webshop_admin.register(ProductImage)
-#webshop_admin.register(Attribute, AttributeAdmin)
+webshop_admin.register(ProductVariant, ProductVariantAdmin)
+webshop_admin.register(Attribute, AttributeAdmin)
 webshop_admin.register(Feature, FeatureAdmin)

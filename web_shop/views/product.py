@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from web_shop.models import Product, ProductVariant
 from saleor.product.models import Category
 from saleor.cart.forms import AddToCartForm
-from saleor.cart import Cart
+from cart import Cart
 from django import forms
 import json
 from django.contrib import messages
