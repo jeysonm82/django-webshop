@@ -1,0 +1,22 @@
+{% load i18n %}
+<!-- Modal -->
+<div class="modal fade" id="viewcart_modal" tabindex="-1" role="dialog" aria-labelledby="ViewCart" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      </div>
+      <div class="modal-body">
+          <iframe src='/shop/cart?popup=1'></iframe>
+      </div>
+      <div class="modal-footer">
+        <div class='cart_btns'>
+            <a href="{# url "checkout:index" #}" class="btn btn_green" data-dismiss="modal">{% trans "Continue shopping"%}</a>
+            <a href="{# url "checkout:index" #}" class="btn_green">{% trans 'Checkout'%}</a>
+            <div class='clr'></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

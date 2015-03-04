@@ -1,0 +1,27 @@
+{% load at_size from images %}
+{%with curcat_parent=category.parent%}
+<div  id='cat-list'>
+<ul id='category-cont'>
+    {%for category in category_list%}
+    {%if category.is_root_node%}
+        {%if forloop.counter0%}
+            </ul></li>
+        {%endif%}
+        <li>
+        {#Root category#}
+        <a>{% if category.images.exists %}
+            <img src='{{category.images.first|at_size:"agro_cat"}}'>
+            {%else%}
+            {{category}}
+            {%endif%}</a>
+
+        {#Subcategories#}
+        <ul class='sublist {%if category != curcat_parent%}hid{%endif%}'>
+    {%else%}
+    <li ><a href='{%url 'catalog' cat_id=category.pk slug=category.slug%}'>- {{category}}</a></li>
+    {%endif%}
+    {%endfor%}
+        </ul></li><!-- closing last root node li -->
+</ul>
+</div>
+{%endwith%}

@@ -1,0 +1,14 @@
+{% load at_size from images %}
+<ul class='inner-product'>
+        {%for product in products_list%}
+        <li>
+        <div class='img-cont'>
+        {% if product.images.exists %}
+        <a href='{%url 'product_detail' pk=product.pk slug=product.get_slug %}'><span class='iblock'></span><img src="{{ product.images.first|at_size:"agro_catalog" }}" alt=""></a>
+        </div>
+        {%endif%}
+        <a href='{%url 'product_detail' pk=product.pk slug=product.get_slug %}'>{{product}}</a>
+        </li>
+        {%endfor%}
+    </ul>
+

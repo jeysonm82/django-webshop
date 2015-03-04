@@ -1,0 +1,86 @@
+{%extends "base.html"%}
+{% load at_size from images %}
+{% load i18n %}
+{%block wrapper_class%}
+shop
+{%endblock%}
+{%block style%}
+
+<link rel="stylesheet" href="/static/web_shop/css/product_detail.css">
+<link rel="stylesheet" href="/static/web_shop/css/catalog.css">
+<link rel="stylesheet" href="/static/web_shop/css/jquery.jqzoom.css">
+{%endblock%}
+{% block title %} Detalle de producto {% endblock %}
+{% block scripts %}
+{{block.super}}
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+<script src="http://code.jquery.com/jquery-migrate-1.2.1.js"></script>
+<script src="/static/web_shop/scripts/jquery.jqzoom-core.js"></script>
+<script src="/static/web_shop/scripts/catalog_menu.js"></script>
+<script>
+    $(document).ready(
+                function() {
+                //Product image zoom
+                 var options = {  
+                    zoomType: 'standard',  
+                    lens:true,  
+                    preloadImages: true,  
+                    alwaysOn:false,  
+                    zoomWidth: 300,  
+                    zoomHeight: 400,  
+                    position:'right'
+                    //...MORE OPTIONS  
+                };
+                    $('.zoom-img').jqzoom(options);
+                }
+            );
+</script>
+{% endblock %}
+{%block content%}
+<div id='shop-header' >
+    <div class='container'>
+    <h2 class='iblock'>Productos</h2>
+    <div id='cur-cat' class='iblock'>
+        <p>{{category.parent}}</p><p>{{category}}</p>
+    </div>
+    </div>
+</div>  
+
+<div id='product-detail' class='gray-box left' >
+    <div class='container'>
+    {%include "web_shop/category_list.html"%}
+    <div class='product-detail-cont'>
+    <span style="float: right"><a href='{%url 'catalog' cat_id=category.pk slug=category.slug%}'><img src="/static/web_shop/img/btn-volver.png"></a></span>
+        {%include "web_shop/product_img_gallery_zoom.html"%}
+        
+        <div class='product-details-right iblock'>
+        <br>
+            <h3>{{product.name}}</h3>
+            <div id='product-desc'>
+                <p>
+                {{product.description}}
+                </p>
+                <div>
+                    <h4>Especificaciones técnicas</h4>
+                    {# product features#}
+                    <table class='ft-list'><tbody>
+                    {%for pf in product.get_features%}
+                    <tr><td><b>{{pf.feature}}:</b></td> <td> {{pf.value}}</td></tr>
+                    {%endfor%}
+                    </tbody></table>
+                </div>
+            </div>
+        </div>
+        <br/>
+        <br/><br/> {#TODO replace br with margin-top#}
+
+    </div>
+</div>
+</div>
+        {%endblock%}
+
+{%block header%}
+    {{block.super}}
+    {# We have to include it here because of parent's z-index #}
+    {%include "web_shop/view_cart_modal.html"%}
+{%endblock%}

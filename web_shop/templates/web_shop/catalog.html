@@ -1,0 +1,45 @@
+{%extends "web_base/base_layout.html"%}
+{% load at_size from images %}
+{% load i18n %}
+{%block body_class%}
+product
+{%endblock%}
+
+{%block wrapper_class%}
+shop
+{%endblock%}
+{%block style%}
+
+<link rel="stylesheet" href="/static/web_shop/css/catalog.css">
+{%endblock%}
+{% block scripts %}
+{{block.super}}
+<script src="/static/web_shop/scripts/catalog_menu.js"></script>
+{%endblock%}
+
+{%block content%}
+<div id='shop-header' >
+    <div class='container'>
+    <h2 class='iblock'>Productos</h2>
+    <div id='cur-cat' class='iblock'>
+        {%if category%}
+        <p>{{category.parent}}</p><p>{{category}}</p>
+        {%else%}
+        <p>Últimos productos</p>
+        {%endif%}
+        </div>
+    </div>
+</div>  
+<div id='shop-cont' class='gray-box left' >
+    <div class='container'>
+{%include "web_shop/category_list.html"%}<!--
+--><div id='product-list'>
+    
+    {%include "web_shop/product_list.html"     %}
+    {# Paginator #}
+    {%include "web_shop/paginator.html"     %}
+
+</div>
+</div>
+</div>
+{%endblock%}

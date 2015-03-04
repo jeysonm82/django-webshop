@@ -1,0 +1,209 @@
+{% extends base_template %}
+{% load as_vertical_form from bootstrap %}
+{% load gross from prices_i18n %}
+{% load i18n %}
+{% load at_size from images %}
+{% block title %}{% trans "Your cart" %} — {{ block.super }}{% endblock %}
+
+{% block breadcrumb %}
+    {{ block.super }}
+<li><a href="{% url 'cart:index' %}">{% trans "Cart" %}</a></li>
+{% endblock breadcrumb %}
+{%block style%}
+<style>
+#table_cart {
+   margin: auto; 
+   margin-top: 20px;
+   width: 100%;
+}
+#table_cart thead th {
+    color: #ad5124;
+    padding-top: 25px;
+    padding-bottom: 25px;
+}
+#table_cart tfoot td {
+    padding-top: 25px;
+    padding-bottom: 25px;
+    text-align: center;
+}
+#table_cart tfoot tr, #table_cart thead th  {
+    border-top: 1px solid;
+    border-bottom: 1px solid;
+
+    border-color: #ad5124;
+}
+
+#table_cart img{
+     border: 1px solid #99c024;
+}
+#table_cart tbody td{
+    text-align: center;
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+
+
+#table_cart td input.form-control{
+    width: 50px;
+    padding: 3px;
+    height: initial;
+    display: inline;
+    text-align: center;
+    background: #eee;
+}
+
+#shopping-cart {
+    padding: 5px;
+    background: #fff;
+}
+#shopping-cart h1 {
+     margin: 0;
+     color: #4a5407;
+     background: url('/static/img/cart_icon.png') no-repeat right;
+     width: 350px;
+ 
+}
+
+#shopping-cart .alert{
+    text-align: center;
+}
+.cart_btns {
+    text-align: center;
+    padding-top: 30px;
+    width: 60%;
+    margin-left: auto;
+}
+.cart_btns >:first-child{
+    display: block;
+    float: left;
+    min-width: 130px;
+}
+
+.cart_btns a{
+    float: right;
+}
+.del-line {
+
+    background: transparent;
+    border: none;
+    padding: 0;
+    font-size: 24px;
+    font-weight: 400;
+}
+
+.del-line:hover {
+
+    color:#99c024;
+}
+.logo-inline {
+    width: 115px;
+    height: auto;
+}
+
+.logo-inline, #shopping-cart h1 {
+    display: inline-block;
+
+
+}
+</style>
+{%endblock%}
+{%block scripts%}
+    {{block.super}}
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+    <script>
+    $(document).ready(
+        function(){
+            /* Delete product line*/
+            $(".del-line").click(
+                function(){
+                    
+                    var tr_parent = $(this).parent().parent();    
+                    tr_parent.hide(250);
+                    $('input', tr_parent).attr('value', 0);
+
+                    //return false;
+                }
+            );
+        }
+    
+    );
+    </script>
+{%endblock%}
+{% block content %}
+<div class='gray-white-grad' id='shopping-cart'>
+
+<img class='logo-inline' src="/static/img/logo.png" alt="logo"/>
+<h1> Carrito de compras</h1>
+ 
+{% if cart %}
+ {% for message in messages %}
+ <div class='alert alert-{%if message.tags == "error"%}danger{%else%}success{%endif%}'>
+     {{message}}
+ </div>
+ {%endfor%}
+
+ <form role="form"  method="post" action='{%url "view_cart"%}{%if popup%}?popup=1{%endif%}'>
+    {% csrf_token %}
+    {{ formset.management_form }}
+    <table id='table_cart'>
+        <thead>
+            <tr>
+                <th></th>
+                <th class="">{% trans "Image" %}</th>
+                <th class="">{% trans "Product" %}</th>
+                <th class="">{% trans "Quantity" %}</th>
+                <th class="">{% trans "Price" %}</th>
+                <th class="">{% trans "Subtotal" %}</th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <td class=""></td>
+                <td class=""></td>
+                <td class=""></td>
+                <td class="">
+                    <button class="btn btn-default" type="submit">
+                        {% trans "Update quantities" %}
+                    </button>
+                </td>
+                <th class="">{% trans "Total" %}:</th>
+                <td class=""><b>$ </b>{{  cart.get_total.net|floatformat:2 }}</td>
+            </tr>
+        </tfoot>
+        <tbody>
+            {% for form in formset %}
+            <tr>
+                <td>
+                    <button type='submit'  class='del-line' > X</button>
+                </td>
+                <td>
+                <img src="{{ form.cart_line.product.images.first|at_size:"thumb_detail" }}" alt="">
+                </td>
+                <td>
+                    <a href="{# form.cart_line.product.get_absolute_url #}">{{ form.cart_line.product }} </a>
+                    <br/>
+                    <small class='sku'>{%trans "SKU"%}: {{ form.cart_line.product.sku }} </small>
+                </td>
+                <td>{{ form.quantity|as_vertical_form:False }}</td>
+                <td><b>$ </b>{{  form.cart_line.get_price_per_item.net|floatformat:2 }}</td>
+                {#this was {{gross }}#}
+                <td><b>$ </b>{{  form.cart_line.get_total.net|floatformat:2 }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {%if not popup%}
+        <div class='cart_btns'>
+            <a href="{%url 'catalog-root'%}" class="btn_green">{% trans "Continue shopping"%}</a>
+            <a href="{# url "checkout:index" #}" class="btn_green">{% trans 'Checkout'%}</a>
+            <div class='clr'></div>
+        </div>
+        {%endif%}
+</form>
+{% else %}
+<p>
+    {% trans 'Your cart is empty' %}
+</p>
+{% endif %}
+</div>
+{% endblock content %}

@@ -1,0 +1,228 @@
+#product-list {
+    width: 650px;
+    background: #fff;
+    min-height: 800px;
+    padding-left: 25px;
+    padding-top: 30px;
+}
+
+.cat-title {
+    /*display: inline-block;*/
+    border-bottom: 1px solid #ad5124;
+    color: #a1a1a1;
+    padding-bottom: 15px;
+    padding-top: 15px;
+    padding-left: 15px;
+    margin: 0;
+    width: 680px;
+    line-height: 30px;
+}
+#root-cat {
+    margin: 0;
+    color: #626b2a;
+    width: 200px;
+    margin-right: 25px;
+    padding-bottom: 15px;
+}
+
+
+/*** BEGIN CATEGORY BAR ***/
+#cat-list  {
+    width: 300px;
+}
+
+
+#category-cont {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    padding-top: 30px;
+    width: 300px;
+    background: #e7e7e7;
+}
+
+#shop-cont.gray-box.left {
+    background: -webkit-linear-gradient(left, #e7e7e7, #e7e7e7 50%, white 50%, white);
+    background: -moz-linear-gradient(left, #e7e7e7, #e7e7e7 50%, white 50%, white);
+}
+
+#category-cont>li>a  {
+    display: block;
+    padding: 5px;
+    width: 220px;
+    font-size: 26px;
+    font-weight: bold;
+    text-align: left;
+    background:  url("/static/web_shop/img/orange_rombito.png") no-repeat  center left;
+    padding-left: 25px;
+    margin-left: 10px;
+    color: #e2640d;
+    text-shadow: 1px 1px rgba(13,32,35,0.19);
+    
+}
+
+#category-cont>li>a:hover  {
+    cursor: pointer;
+}
+#category-cont li a {
+    text-decoration: none;
+}
+#cat-list, #product-list {
+    float: left;
+    vertical-align: top;
+}
+#category-cont li {
+    text-align: center;
+}
+
+#category-cont li, #category-cont a {
+    color:  #ad5124;
+
+}
+#category-cont .sublist li {
+    color: #797979;
+    background: #fff;
+    font-weight: bold;
+    text-align: left;
+
+}
+#category-cont .sublist li a{
+    color: #7d7d7d;
+    font-size: 20px;
+    text-shadow: 1px 1px rgba(13,32,35,0.19);
+} 
+#category-cont .sublist li a:hover{
+    color: #b7b426;
+}
+#category-cont .sublist {
+    background: #fff;
+    padding: 0px;
+    list-style-type: none;
+    text-align: left;
+    list-style-type: none;
+    list-style-image: none;
+    padding-left: 25px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+#shop-header h2{
+    width: 300px;
+    margin: 0;
+    line-height: 80px;
+}
+
+#shop-header {
+    overflow: hidden;
+}
+
+#cur-cat {
+    background: url('/static/web_shop/img/barra_orange_cat.png') no-repeat;
+    width: 620px;
+    height: 85px;
+    margin: 0;
+    /*line-height: 80px;*/
+    color: #fff;
+    font-size: 25px;
+    position:relative;
+    margin-left: 28px;
+    font-family: 'Effra-Regular', serif;
+    text-shadow: 1px 1px rgba(13, 32, 35, 0.19);
+    font-size: 26px;
+}
+
+#cur-cat:after {
+    content: " ";
+    position: absolute;
+    left: 100%;
+    top: 0px;
+    width: 388px;
+    height: 85px;
+    background: url('/static/web_shop/img/barra_orange_cat.png') no-repeat;
+    background-position: -620px 0px;
+}
+
+#cur-cat p{
+    display: inline-block;
+    vertical-align: top;
+    padding-top: 14px;
+}
+#cur-cat p:first-child{
+    font-size: 34px;
+    font-weight: bold;
+    margin-left: 60px;
+}
+
+#cur-cat p:not(:first-child){
+    margin-left: 20px;
+    padding-top: 20px;
+    max-width: 250px;
+}
+
+/*** END CATEGORY BAR ***/
+ul.inner-product {
+
+    list-style-type: none;
+    margin-bottom: 25px;
+    padding: 10px 5px;
+}
+
+
+ul.inner-product li {
+
+    width: 184px;
+    min-height: 290px;
+    display: inline-block;
+    vertical-align: bottom;
+    text-align: center;
+    margin-right: 20px;
+    border: 1px solid #e36a11;
+    margin-top: 20px;
+}
+
+ul.inner-product li div {
+    width: 180px;
+    height: 240px;
+    padding: 2px;
+
+
+}
+ul.inner-product li div a {
+    display: block;
+    height: 100%;
+}
+
+ul.inner-product li img {
+    max-width: 180px;
+    max-height: 240px;
+}
+
+ul.inner-product a {
+    text-decoration: none;
+    color:#b7b426; 
+    font-weight: bold;
+    line-height: 23px;
+    font-size: 12px;
+}
+
+#product-list a:hover {
+    text-decoration: underline;
+}
+
+#shop-header, #shop-cont {
+    font-family: 'Effra-Regular', serif;
+}
+
+#shop-header h2{
+  font-size: 35px;
+  color: #6e6e6e;
+  text-shadow: 1px 1px rgba(13, 32, 35, 0.19);
+}
+.img-cont img {
+display: inline-block;
+}
+.img-cont .iblock {
+ vertical-align: middle;
+}
+.img-cont span {
+height: 100%;
+}

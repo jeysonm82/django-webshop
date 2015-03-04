@@ -1,0 +1,13 @@
+*.pyc
+*.swp
+*.py~
+*.zip
+*.rar
+*.html~
+*.htm~
+*.css~
+*.idea
+sample_data.sql
+db.sqlite3
+!.gitignore
+*/migrations/*.py
